@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Totor-embed</title>
+        <meta charset="utf-8" />
+        <style>
+            body {font-family: sans-serif;}
+            .panel {
+                border: 2px solid #9e9e9e;
+                border-radius: 5px;
+            }
+
+            .panel.title {
+                border:0;
+                border-bottom: 2px solid #9e9e9e;
+                border-radius: 2px 2px 0 0;
+                background: #4971ff;
+                color: #fff;
+                padding: 10px;
+                margin-bottom: 10px;
+                font-weight: bold;
+            }
+
+            .panel.content {
+                border: 0;
+                padding: 5px 15px;
+            }
+            .panel p {
+                margin: 2px 0;
+            }
+
+            span.online {
+                display: inline-block;
+                width: 10px; height: 10px;
+                border-radius: 5px;
+                animation: status-success 2s infinite;
+            }
+
+            @keyframes status-success{
+                 from { background: #9de7c6; }
+                 50%  { background: #09df81; }
+                 to   { background: #9de7c6; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="panel">
+            <div class="panel title">
+                Tor Relay : Name</div>
+            <div class="panel content">
+                <p><b>IP address: </b> 10.10.0.0</p>
+                <p><b>Status: </b> <span class="online"></span></p>
+                <p><b>Uptime: </b> 12 days</p>
+                <p><b>Flags: </b> U I U U</p>
+            </div>
+        </div>
+    </body>
+</html>
