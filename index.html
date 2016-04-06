@@ -2,55 +2,41 @@
     <head>
         <title>Totor-embed</title>
         <meta charset="utf-8" />
-        <style>
-            body {font-family: sans-serif;}
-            .panel {
-                border: 2px solid #9e9e9e;
-                border-radius: 5px;
-            }
-
-            .panel.title {
-                border:0;
-                border-bottom: 2px solid #9e9e9e;
-                border-radius: 2px 2px 0 0;
-                background: #4971ff;
-                color: #fff;
-                padding: 10px;
-                margin-bottom: 10px;
-                font-weight: bold;
-            }
-
-            .panel.content {
-                border: 0;
-                padding: 5px 15px;
-            }
-            .panel p {
-                margin: 2px 0;
-            }
-
-            span.online {
-                display: inline-block;
-                width: 10px; height: 10px;
-                border-radius: 5px;
-                animation: status-success 2s infinite;
-            }
-
-            @keyframes status-success{
-                 from { background: #9de7c6; }
-                 50%  { background: #09df81; }
-                 to   { background: #9de7c6; }
-            }
-        </style>
+        <link rel="stylesheet" href="static/css/torembed.css">
     </head>
     <body>
         <div class="panel">
             <div class="panel title">
-                Tor Relay : Name</div>
+                Tor Relay : MySuperRelay</div>
             <div class="panel content">
                 <p><b>IP address: </b> 10.10.0.0</p>
                 <p><b>Status: </b> <span class="online"></span></p>
-                <p><b>Uptime: </b> 12 days</p>
-                <p><b>Flags: </b> U I U U</p>
+                <p><b>Uptime: </b> 12 days 4 hours</p>
+                <p><a class="tooltip">
+                    <b style="border-bottom: 1px dotted #000;">Flags: </b>
+                    <span>
+                        Flags icons: <br>
+                        <i class="icon-ok"></i> Valid relay <br>
+                        <i class="icon-shield"></i> Guard-relay <br>
+                        <i class="icon-export"></i> Exit relay <br>
+                        <i class="icon-rocket"></i> Fast relay <br>
+                        <i class="icon-link"></i> Stable relay <br>
+                        <i class="icon-plug"></i> Running relay <br>
+                        <i class="icon-book"></i> HSDir <br>
+                        <i class="icon-folder"></i> V2Dir <br>
+                        <i class="icon-shuffle"></i> BadExit <br>
+                        <i class="icon-folder-open"></i> BadDirectory <br>
+                        <i class="icon-building"></i> Authority relay <br>
+
+                    </span>
+                </a> <i class="icon-folder"></i> I U U</p>
+                <p><b>Fingerprint: </b> 12 days 4 hours</p>
+                <p><b>Country: </b> 12 days 4 hours</p>
+                <p><b>AS Name/AS Number: </b> 12 days 4 hours</p>
+                <p><b>Host name: </b> 12 days 4 hours</p>
+                <p><b>Platform: </b> 12 days 4 hours</p>
+                <p><b>Contact: </b> 12 days 4 hours</p>
+
             </div>
         </div>
     </body>
