@@ -44,9 +44,12 @@ if(!empty($head_color))
 else
     $data['head_color'] = "#4971ff";
 
-$api_data = json_encode(file_get_contents("https://onionoo.torproject.org/details?fingerprint=" + $finger));
+$api_data = json_decode(file_get_contents("https://onionoo.torproject.org/details?fingerprint=" . $finger), true);
+// $api = curl_init("https://onionoo.torproject.org/details?fingerprint=".$finger);
+// $result = curl_exec($api);
+print_r($api_data);
+echo "<br><br>Valeur de relais : " . $api_data["relays"][0]["nickname"];
 
-var_dump($api_data);
 if($api_data == true) {
     ?>
     <html>
