@@ -1,99 +1,152 @@
 <?php
+/*
+ * Torembed : Embed your Tor relay informations on your website!
+ * Author: Michael Vieira (@Themimitoof) <contact@mvieira.fr>
+ * Version: 1.0
+ *
+ * --------------------------------------------------------------------------------
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 Michael Vieira
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+?>
 
-// Relay recognition
-$finger = $_GET['key'];
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Torembed &mdash; Customisation tool</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+        <link rel="stylesheet" href="static/css/custom-tool-page.css">
+        <style media="screen">
 
-// Show informations
-$ip = $_GET['ip'];
-$fingerprint = $_GET['fingerprint'];
-$country = $_GET['country'];
-$as_info = $_GET['as_info'];
-$hostname = $_GET['hostname'];
-$platform = $_GET['platform'];
-$contact = $_GET['contact'];
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Torembed &mdash; Customisation tool</h2>
+            <div class="grid-sm-12 grid-lg-6">
+                <h3>Kitchen</h3>
+                <form class="pure-form pure-form-aligned" id="kitchen">
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="name">Fingerprint</label>
+                            <input id="fingerprint" type="text" placeholder="Fingerprint">
+                        </div>
 
-// Customisation collors
-$head_color = $_GET['head_color'];
+                        <div class="pure-control-group">
+                            <label for="name">Header color</label>
+                            <input id="head_color" type="text" placeholder="Color in hex">
+                        </div>
 
-// Creating array with all informations
-$data = Array();
+                        <div class="pure-controls">
+                            <label class="pure-checkbox">
+                                <input id="ip" type="checkbox" value="ip">
+                                Show IP address
+                            </label>
+                            <label class="pure-checkbox">
+                                <input id="country" type="checkbox" value="country">
+                                Show country
+                            </label>
+                            <label class="pure-checkbox">
+                                <input id="as_info" type="checkbox" value="as_info">
+                                Show ISP informations (AS Name/AS Number)
+                            </label>
+                            <label class="pure-checkbox">
+                                <input id="hostname" type="checkbox" value="hostname">
+                                Show the reverse
+                            </label>
+                            <label class="pure-checkbox">
+                                <input id="platform" type="checkbox" value="platform">
+                                Show the Tor platform
+                            </label>
+                            <label class="pure-checkbox">
+                                <input id="contact" type="checkbox" value="contact">
+                                Show contact informations
+                            </label>
+                            <input type="button" class="pure-button pure-button-primary" value="Generate" onclick="generate()">
+                        </div>
+                    </fieldset>
+                </form>
+            </div><div class="grid-sm-12 grid-lg-6">
+                <h3>Preview</h3>
+                <iframe src="/torembed/embed.php?head_color=444&ip=1&country=1&as_info=1&hostname=1&contact=1&platform=1&fingerprint=2B0DACBB3FAB6FE2E461D9DCE20D95497D75F2A1" width="100%" height="350px" frameborder="0" allowTransparency="true"></iframe>
+                <p>
+                    Code:
+                </p>
 
-if($ip == 1)
-    $data['ip'] = 1;
+                <form class="pure-form">
+                    <div class="pure-control-group">
+                        <textarea id="generated_code" type="text" placeholder="Generated core here" style="width:100%; height:100px" readonly>
 
-if($fingerprint == 1)
-    $data['fingerprint'] = 1;
-
-if($country == 1)
-    $data['country'] = 1;
-
-if($as_info == 1)
-    $data['as_info'] = 1;
-
-if($hostname == 1)
-    $data['hostname'] = 1;
-
-if($platform == 1)
-    $data['platform'] = 1;
-
-if($contact == 1)
-    $data['contact'] = 1;
-
-if(!empty($head_color))
-    $data['head_color'] = $head_color;
-else
-    $data['head_color'] = "#4971ff";
-
-$api_data = json_decode(file_get_contents("https://onionoo.torproject.org/details?fingerprint=" . $finger), true);
-// $api = curl_init("https://onionoo.torproject.org/details?fingerprint=".$finger);
-// $result = curl_exec($api);
-print_r($api_data);
-echo "<br><br>Valeur de relais : " . $api_data["relays"][0]["nickname"];
-
-if($api_data == true) {
-    ?>
-    <html>
-        <head>
-            <title>Totor-embed</title>
-            <meta charset="utf-8" />
-            <link rel="stylesheet" href="static/css/torembed.css">
-        </head>
-        <body>
-            <div class="panel">
-                <div class="panel title">
-                    Tor Relay : <?= $api_data["relays"][0]["nickname"] ?></div>
-                <div class="panel content">
-                    <p><b>IP address: </b> 10.10.0.0</p>
-                    <p><b>Status: </b> <span class="online"></span></p>
-                    <p><b>Uptime: </b> 12 days 4 hours</p>
-                    <p><a class="tooltip">
-                        <b style="border-bottom: 1px dotted #000;">Flags: </b>
-                        <span>
-                            Flags icons: <br>
-                            <i class="icon-ok"></i> Valid relay <br>
-                            <i class="icon-shield"></i> Guard-relay <br>
-                            <i class="icon-export"></i> Exit relay <br>
-                            <i class="icon-rocket"></i> Fast relay <br>
-                            <i class="icon-link"></i> Stable relay <br>
-                            <i class="icon-plug"></i> Running relay <br>
-                            <i class="icon-book"></i> HSDir <br>
-                            <i class="icon-folder"></i> V2Dir <br>
-                            <i class="icon-shuffle"></i> BadExit <br>
-                            <i class="icon-folder-open"></i> BadDirectory <br>
-                            <i class="icon-building"></i> Authority relay <br>
-
-                        </span>
-                    </a> <i class="icon-folder"></i> I U U</p>
-                    <p><b>Fingerprint: </b> 12 days 4 hours</p>
-                    <p><b>Country: </b> 12 days 4 hours</p>
-                    <p><b>AS Name/AS Number: </b> 12 days 4 hours</p>
-                    <p><b>Host name: </b> 12 days 4 hours</p>
-                    <p><b>Platform: </b> 12 days 4 hours</p>
-                    <p><b>Contact: </b> 12 days 4 hours</p>
-
-                </div>
+                        </textarea>
+                    </div>
+                </form>
             </div>
-        </body>
-    </html>
-    <?php
-}
+        </div>
+        <script src="static/js/jquery.min.js"></script>
+        <script type="text/javascript">
+            function generate() {
+                    var URI = document.location.protocol + "/" + window.location.host + "/embed.php";
+                    console.log(URI)
+                    // Check the fingerprint input
+                    if($("#fingerprint").val() != "") {
+                        URI += "?fingerprint=" + $("#fingerprint").val();
+
+                        // Check checkboxes
+                        if($("#ip").is(":checked") == true)
+                            URI += "&ip=1";
+                        if($("#country").is(":checked") == true)
+                            URI += "&country=1";
+                        if($("#as_info").is(":checked") == true)
+                            URI += "&as_info=1";
+                        if($("#hostname").is(":checked") == true)
+                            URI += "&hostname=1";
+                        if($("#platform").is(":checked") == true)
+                            URI += "&platform=1";
+                        if($("#contact").is(":checked") == true)
+                            URI += "&contact=1";
+                        if($("#head_color").val() != "") {
+                            if($("#head_color").val()[0] == "#")
+                                URI += "&head_color=" + $("#head_color").val().split("#")[1];
+                            else
+                                URI += "&head_color=" + $("#head_color").val();
+                        }
+
+                        // Update iframe
+                        $("iframe").attr("src", URI)
+
+                        // Update code textarea
+                        $("#generated_code").html("<iframe src=\"" + URI + "\" width=\"100\" height=\"400px\" frameborder=\"0\" allowTransparency=\"true\"></iframe>")
+                    } else {
+                        alert("You need to add the fingerprint of the Tor relay.")
+                    }
+            }
+
+            // Color form color changing
+            $("#head_color").on("change", function(){
+                $("#head_color").css("background-color", $("#head_color").val());
+            });
+        </script>
+    </body>
+</html>

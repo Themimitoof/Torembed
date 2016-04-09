@@ -30,10 +30,27 @@ span.online {
     animation: status-success 2s infinite;
 }
 
+span.offline {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 5px;
+    background: #eb2323;
+}
+
+
 @keyframes status-success{
      from { background: #9de7c6; }
      50%  { background: #09df81; }
      to   { background: #9de7c6; }
+}
+
+#fingerprint {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+@media(max-width: 436px) {
+    #fingerprint {font-size: 8px;}
 }
 
 a.tooltip {outline:none; }
@@ -54,6 +71,18 @@ a.tooltip span
 {
     border-radius:4px;
     box-shadow: 5px 5px 8px #CCC;
+}
+
+.footer {
+    text-align: right;
+    margin: 5px;
+    font-size: 10px;
+    color: #474747;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #2a2a2a;
 }
 
 /*
