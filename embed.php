@@ -39,6 +39,7 @@ $fingerprint = $_GET['fingerprint']; // Get the fingerprint of the relay to get 
 
 // GET Variables with display options
 $ip = $_GET['ip']; // Show IP Address
+$bandwidth = $_GET['bandwidth']; // Show bandwidth infos
 $country = $_GET['country']; // Show the country
 $as_info = $_GET['as_info']; // Show the ISP informations with the Autonomous System informations (Name and ASN)
 $hostname = $_GET['hostname']; // Show the reverse of the server
@@ -54,6 +55,9 @@ $data = Array();
 
 if($ip == 1 || $ip == true)
     $data['ip'] = 1;
+
+if($bandwidth == 1 || $bandwidth == true)
+    $data['bandwidth'] = 1;
 
 if($country == 1 || $country == true)
     $data['country'] = 1;
@@ -114,7 +118,7 @@ if($api_data == true) {
                         else
                             echo "<span class=\"offline\"></span>";
                     ?></p>
-                    <p id="uptime"><b>Uptime: </b></p>
+                    <p id="uptime"><b>Last reboot: </b> <?= $api_data["relays"][0]["last_restarted"]; ?></p>
                     <p><a class="tooltip">
                         <b style="border-bottom: 1px dotted #000;">Flags: </b>
                         <span>
@@ -182,6 +186,7 @@ if($api_data == true) {
                         }
                     ?></p>
                     <p><b>Fingerprint: </b> <span id="fingerprint"><?= $api_data["relays"][0]["fingerprint"]; ?></span></p>
+                    <p><b>Bandwidth: </b> <span><?= round($api_data["relays"][0]["observed_bandwidth"] / 1000000, 3) . " Mb/s"; ?></span></p>
                     <?php
                         if($data["country"] == 1) {
                             ?>
@@ -223,13 +228,7 @@ if($api_data == true) {
                     ?>
                 </div>
             </div>
-            <p class="footer">Generated with <b><a href="https://torembed.themimitoof.fr" target="_blank">Torembed</a></b></p>
-            <script src="static/js/moment.min.js"></script>
-            <script type="text/javascript">
-                // Parse uptime
-                var uptime = "<?= $api_data["relays"][0]["last_restarted"]; ?>".split(" ")
-                document.getElementById('uptime').innerHTML = "<b>Uptime:</b> " + moment(uptime[0]).fromNow(true) + " " + moment(uptime[1], "HH:mm:ss").fromNow(true)
-            </script>
+            <p class="footer">Generated with <b><a href="https://themimitoof.fr/torembed" target="_blank">Torembed</a></b></p>
         </body>
     </html>
     <?php
